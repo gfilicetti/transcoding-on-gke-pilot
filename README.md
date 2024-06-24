@@ -89,5 +89,91 @@ You can use the files made available for the *Tears of Steel* movie as inputs to
 
 Just go to the [download page](https://mango.blender.org/download) on the Tears of Steel site to download different versions of the file.
 
+## Examples
+
+Here are some examples for different formats, etc.
+
+### Transcode to H.264
+
+```bash
+ffmpeg
+    -y
+    -xerror
+    -err_detect explode
+    -i pack-request-999999.mov
+    -r 30000/1001
+    -frames 12317
+    -vf zscale=threads=1:f=lanczos:d=error_diffusion:primariesin=709:transferin=709:matrixin=709:primaries=709:matrix=709:transfer=709:range=tv:w=640:h=360,setsar=1
+    -c:v libx264
+    -pix_fmt yuv420p
+    -preset:v veryslow
+    -profile:v high
+    -f h264
+    -x264-params annexb=1:aud=1:nal-hrd=vbr:stitchable=1:force-cfr=1:colorprim=bt709:transfer=bt709:colormatrix=bt709:sar=1/1:open-gop=0:scenecut=0:bframes=3:crf=22:vbv-maxrate=1100:vbv-bufsize=4400:keyint=120:min-keyint=120:rc-lookahead=120:ref=4
+    -an /tmp/tx1310421995/merged.h264.temp.pass-0
+```
+
+### Transcode to H.265
+
+```bash
+ffmpeg
+    -y
+    -xerror
+    -err_detect explode
+    -i pack-request-999999.mov
+    -r 30000/1001
+    -frames 12317
+    -vf zscale=threads=1:f=lanczos:d=error_diffusion:primariesin=709:transferin=709:matrixin=709:primaries=709:matrix=709:transfer=709:range=tv:w=576:h=324,setsar=1
+    -c:v libx265
+    -pix_fmt yuv420p10le
+    -preset:v medium
+    -profile:v main10
+    -f hevc
+    -x265-params info=1:annexb=1:aud=1:repeat-headers=1:hrd=1:asm=avx512:sar=1:no-high-tier=1:open-gop=0:b-intra=1:weightb=1:crf=27:vbv-maxrate=650:vbv-bufsize=2600:keyint=120:min-keyint=120:rc-lookahead=120:colorprim=bt709:transfer=bt709:colormatrix=bt709
+    -an /tmp/tx4162365502/merged.hevc.temp.pass-0
+```
+
+### Mezzanine File Characteristics
+
+```bash
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'pack-request-999999.mov':
+  Metadata:
+    major_brand     : qt  
+    minor_version   : 537199360
+    compatible_brands: qt  
+    creation_time   : 2024-06-24T20:56:35.000000Z
+    encoder         : Dalet 11.9.9.7.405769
+    encoder-eng     : Dalet 11.9.9.7.405769
+
+  Duration: 00:06:50.98, start: 0.000000, bitrate: 207749 kb/s
+
+  Stream #0:0[0x1](eng): Video: prores (HQ) (apch / 0x68637061), yuv422p10le(bt709, progressive), 1920x1080, 207748 kb/s, SAR 1:1 DAR 16:9, 29.97 fps, 29.97 tbr, 30k tbn (default)
+    Metadata:
+      creation_time   : 2024-06-24T20:56:35.000000Z
+      handler_name    : VideoHandler
+      vendor_id       : appl
+      encoder         : Apple ProRes 422 HQ
+      timecode        : 00:00:00;00
+  Stream #0:1[0x2](eng): Data: none (tmcd / 0x64636D74) (default)
+    Metadata:
+      creation_time   : 2024-06-24T20:56:35.000000Z
+      handler_name    : TimeCodeHandler
+      timecode        : 00:00:00;00
+
+Stream mapping:
+  Stream #0:0 -> #0:0 (prores (native) -> hevc (libx265))
+```
+
+### Supported Formats
+
+#### Codecs
+- AVC Intra (MXF)
+- J2K (MXF)
+- ProRes (mov)
+
+#### Bitrates
+- Bitrates vary by upstream source 
+    - Can be 135 mpbs for a 1080p source
+    - Can be 750+ mbps for a UHD PQ master
 
 
