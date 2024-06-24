@@ -25,4 +25,4 @@ if [ -z "${FFPARAMS}" ]; then
     FFPARAMS="-c:v libx264 -b:v 20M -vf scale=1280:720 -threads 0 -x264-params threads=auto"
 fi
 
-ffmpeg -y -benchmark -hide_banner -i "${INPUT}" "${FFPARAMS}" "${OUTPUT}" 2>&1 | grep 'bench: u' | awk '{print $4}' | cut -d= -f2
+ffmpeg -y -benchmark -hide_banner -i $INPUT $FFPARAMS $OUTPUT 2>&1 | grep 'bench: u' | awk '{print $4}' | cut -d= -f2
