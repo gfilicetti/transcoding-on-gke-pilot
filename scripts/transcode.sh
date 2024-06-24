@@ -4,7 +4,7 @@ usage() {
     echo "Usage: ${0} -i <input_file> -o <output_file> [-p <ffmpeg_parameters>]" 1>&2; exit 1
 }
 
-while getopts "i:o:" OPT; do
+while getopts "i:o:p:" OPT; do
   case "${OPT}" in
     i) INPUT="${OPTARG}";;
     o) OUTPUT="${OPTARG}";;
