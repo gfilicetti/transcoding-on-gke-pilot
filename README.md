@@ -95,6 +95,7 @@ Here are some examples for different formats, etc.
 
 ### Transcode to H.264
 
+Command:
 ```bash
 ffmpeg
     -y
@@ -113,8 +114,14 @@ ffmpeg
     -an /tmp/tx1310421995/merged.h264.temp.pass-0
 ```
 
+Params:
+```
+-threads 0 -xerror -r 30000/1001 -frames 12317 -vf zscale=threads=1:f=lanczos:d=error_diffusion:primariesin=709:transferin=709:matrixin=709:primaries=709:matrix=709:transfer=709:range=tv:w=640:h=360,setsar=1 -c:v libx264 -pix_fmt yuv420p -preset:v veryslow -profile:v high -f h264 -x264-params annexb=1:aud=1:nal-hrd=vbr:stitchable=1:force-cfr=1:colorprim=bt709:transfer=bt709:colormatrix=bt709:sar=1/1:open-gop=0:scenecut=0:bframes=3:crf=22:vbv-maxrate=1100:vbv-bufsize=4400:keyint=120:min-keyint=120:rc-lookahead=120:ref=4
+```
+
 ### Transcode to H.265
 
+Command: 
 ```bash
 ffmpeg
     -y
@@ -131,6 +138,11 @@ ffmpeg
     -f hevc
     -x265-params info=1:annexb=1:aud=1:repeat-headers=1:hrd=1:asm=avx512:sar=1:no-high-tier=1:open-gop=0:b-intra=1:weightb=1:crf=27:vbv-maxrate=650:vbv-bufsize=2600:keyint=120:min-keyint=120:rc-lookahead=120:colorprim=bt709:transfer=bt709:colormatrix=bt709
     -an /tmp/tx4162365502/merged.hevc.temp.pass-0
+```
+
+Params:
+```
+-threads 0 -xerror -c:v libx265 -r 30000/1001 -frames 12317 -vf zscale=threads=1:f=lanczos:d=error_diffusion:primariesin=709:transferin=709:matrixin=709:primaries=709:matrix=709:transfer=709:range=tv:w=576:h=324,setsar=1 -pix_fmt yuv420p10le -preset:v medium -profile:v main10 -f hevc -x265-params info=1:annexb=1:aud=1:repeat-headers=1:hrd=1:asm=avx512:sar=1:no-high-tier=1:open-gop=0:b-intra=1:weightb=1:crf=27:vbv-maxrate=650:vbv-bufsize=2600:keyint=120:min-keyint=120:rc-lookahead=120:colorprim=bt709:transfer=bt709:colormatrix=bt709
 ```
 
 ### Mezzanine File Characteristics
