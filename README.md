@@ -31,6 +31,25 @@ gcloud compute instances create transcode-vm-large \
     --create-disk=auto-delete=yes,device-name=ssd,mode=rw,name=transcode-vm-large-disk,size=100,type=projects/transcoding-on-gke-pilot/zones/us-east4-c/diskTypes/pd-ssd
 ```
 
+## Creating More Disks
+
+If you need to create even more SSD persistent data disks after you create your VMs you can do so with a command similar to:
+
+```bash
+gcloud compute disks create transcode-vm-xlarge-disk \
+    --type=pd-ssd \
+    --size=1000GB \
+    --zone=us-east4-c
+```
+
+### Attach a New Disk to an Existing VM
+
+To attach pre-existing disks to an existing VM, use this command:
+
+```bash
+gcloud compute instances attach-disk transcode-vm-large --disk transcode-vm-xlarge-disk --zone us-east4-c
+```
+
 ## Preparing Disks
 Run these commands from inside the VMs
 
@@ -62,6 +81,13 @@ Our script will output only the time it took to run the transcode (in seconds).
 ```bash
 transcode.sh -i input.ts -o output.mp4 [-p optional parameter string]
 ```
+> **Note**: The default parameter string is: `-c:v libx264 -b:v 20M -vf scale=1280:720 -threads 0 -x264-params threads=auto`
+
+## Example Source Material
+
+You can use the files made available for the *Tears of Steel* movie as inputs to transcoding with ffmpeg.
+
+Just go to the [download page](https://mango.blender.org/download) on the Tears of Steel site to download different versions of the file.
 
 
 
